@@ -18,5 +18,4 @@ namespace Stories.Data
 
         public DbSet<Stories.Models.ParagraphsTable> ParagraphsTable { get; set; } = default!;
     }
-
 }

@@ -22,7 +22,7 @@
     <div class="card w-100">
         <div class="card-body">
             <h5 class="card-title">@Html.DisplayFor(modelItem => story.StoryTitle)</h5>
-            <p class="card-text">@Html.DisplayFor(modelItem => story.StoryBody)</p>
+            @*<p class="card-text">@Html.DisplayFor(modelItem => story.StoryBody)</p>*@
             <a asp-controller="Stories" asp-action="Details" asp-route-id="@story.StoryId">Read more</a>
             <p class ="card-text">@Html.DisplayFor(modelItem => story.StoryCreatedAt)</p>
         </div>
