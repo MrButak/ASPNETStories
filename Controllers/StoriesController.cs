@@ -152,7 +152,7 @@ namespace Stories.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool StoriesTableExists(int id)
