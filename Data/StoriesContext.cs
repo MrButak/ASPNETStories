@@ -15,5 +15,8 @@ namespace Stories.Data
         }
 
         public DbSet<Stories.Models.StoriesTable> StoriesTable { get; set; } = default!;
+
+        public DbSet<Stories.Models.ParagraphsTable> ParagraphsTable { get; set; } = default!;
     }
+
 }
