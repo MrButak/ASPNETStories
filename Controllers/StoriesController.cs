@@ -20,12 +20,12 @@ namespace Stories.Controllers
         }
 
         // GET: Stories
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
               return _context.StoriesTable != null ? 
                           View(await _context.StoriesTable.ToListAsync()) :
                           Problem("Entity set 'StoriesContext.StoriesTable'  is null.");
-        }
+        }*/
 
         // GET: Stories/Details/5
         public async Task<IActionResult> Details(int? id)
