@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Stories.Data;
 using Stories.Models;
+using Stories.ViewModels;
 
 namespace Stories.Controllers
 {
@@ -56,15 +57,46 @@ namespace Stories.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StoryId,StoryTitle,StoryBody,StoryCreatedAt,StoryUpdatedAt")] StoriesTable storiesTable)
+        public async Task<IActionResult> Create(CreateStoryViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(storiesTable);
-                await _context.SaveChangesAsync();
+                /*_context.Add(storiesTable);
+                await _context.SaveChangesAsync();*/
+                Console.WriteLine("ModelState is NOT valid");
+                return RedirectToAction("Create", "Stories");
             }
-            return RedirectToAction("Index", "Home");
+
+            Console.WriteLine("Valid Model State");
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var story = new StoriesTable { StoryTitle = model.StoryTitle };
+                    _context.Add(story);
+                    _context.SaveChanges();
+
+                    var paragraph = new ParagraphsTable
+                    {
+                        ParagraphText = model.ParagraphText,
+                        StoryId = story.StoryId
+                    };
+                    _context.Add(paragraph);
+                    // SaveChanges() Here is causing a foreign key constraint error
+                    /*_context.SaveChanges();*/
+
+                    transaction.Commit();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
+
 
         // GET: Stories/Edit/5
         public async Task<IActionResult> Edit(int? id)

@@ -2,7 +2,7 @@
 
 namespace Stories.ViewModels
 {
-    public class CreateStoryModel
+    public class CreateStoryViewModel
     {
         [Required(ErrorMessage = "Please give your story a title")]
         [Display(Name = "Story Title")]
