@@ -4,10 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="d-flex flex-column w-100 align-items-center">
+    <h3>Tell your story...</h3>
+</div>
 
-<h4>StoriesTable</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -19,19 +19,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="StoryBody" class="control-label"></label>
-                <input asp-for="StoryBody" class="form-control" />
+                <textarea asp-for="StoryBody" class="form-control"></textarea>
                 <span asp-validation-for="StoryBody" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StoryCreatedAt" class="control-label"></label>
-                <input asp-for="StoryCreatedAt" class="form-control" />
-                <span asp-validation-for="StoryCreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StoryUpdatedAt" class="control-label"></label>
-                <input asp-for="StoryUpdatedAt" class="form-control" />
-                <span asp-validation-for="StoryUpdatedAt" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -40,7 +31,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

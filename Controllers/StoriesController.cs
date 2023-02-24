@@ -62,9 +62,8 @@ namespace Stories.Controllers
             {
                 _context.Add(storiesTable);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return View(storiesTable);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Stories/Edit/5

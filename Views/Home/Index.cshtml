@@ -1,8 +1,38 @@
-﻿@{
+﻿@model IEnumerable<Stories.Models.StoriesTable>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex flex-column w-100 align-items-center">
+    <h3>Tell your story...</h3>
+    <a asp-controller="Stories" asp-action="Create">
+        <i class="bi bi-plus-circle-fill fs-1"></i>
+    </a>
 </div>
+
+
+<div class="w-100 container-fluid d-flex flex-column align-items-center gap-4 bg-light p-4">
+
+    @if(!Model.Any())
+    {
+        <p>No stories, make history and be the first to tell yours.</p>
+    }
+    @foreach(var story in Model)
+    {
+    <div class="card w-100">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => story.StoryTitle)</h5>
+            <p class="card-text">@Html.DisplayFor(modelItem => story.StoryBody)</p>
+            <a asp-controller="Stories" asp-action="Details" asp-route-id="@story.StoryId">Read more</a>
+            <p class ="card-text">@Html.DisplayFor(modelItem => story.StoryCreatedAt)</p>
+        </div>
+    </div>
+    }
+
+</div>
+
+        
+@*<a asp-action="Edit" asp-route-id="@item.StoryId">Edit</a> |
+<a asp-action="Details" asp-route-id="@item.StoryId">Details</a> |
+<a asp-action="Delete" asp-route-id="@item.StoryId">Delete</a>*@
