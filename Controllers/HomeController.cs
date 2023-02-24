@@ -22,9 +22,11 @@ namespace Stories.Controllers
         // GET: Stories
         public async Task<IActionResult> Index()
         {
-            return _context.StoriesTable != null ?
+            /*return _context.StoriesTable != null ?
                         View(await _context.StoriesTable.ToListAsync()) :
-                        Problem("Entity set 'StoriesContext.StoriesTable'  is null.");
+                        Problem("Entity set 'StoriesContext.StoriesTable'  is null.");*/
+            List<StoriesTable> stories = await _context.StoriesTable.Include(s => s.ParagraphsTable).ToListAsync();
+            return View(stories);
         }
 
         public IActionResult Privacy()
