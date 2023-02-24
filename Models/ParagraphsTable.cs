@@ -5,6 +5,7 @@ namespace Stories.Models
 {
     public class ParagraphsTable
     {
+        [Key]
         public int ParagraphId { get; set; }
 
         public string Paragraphs { get; set; } = null!;
