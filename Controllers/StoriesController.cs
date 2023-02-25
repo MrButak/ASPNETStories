@@ -61,13 +61,9 @@ namespace Stories.Controllers
         {
             if (!ModelState.IsValid)
             {
-                /*_context.Add(storiesTable);
-                await _context.SaveChangesAsync();*/
-                Console.WriteLine("ModelState is NOT valid");
                 return RedirectToAction("Create", "Stories");
             }
-            Console.WriteLine(model.ParagraphText);
-            Console.WriteLine("Valid Model State");
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -82,7 +78,6 @@ namespace Stories.Controllers
                         StoryId = story.StoryId
                     };
                     _context.Add(paragraph);
-                    // SaveChanges() Here is causing a foreign key constraint error
                     _context.SaveChanges();
 
                     transaction.Commit();

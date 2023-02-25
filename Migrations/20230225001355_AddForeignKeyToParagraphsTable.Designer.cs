@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stories.Data;
 
@@ -11,9 +12,11 @@ using Stories.Data;
 namespace Stories.Migrations
 {
     [DbContext(typeof(StoriesContext))]
-    partial class StoriesContextModelSnapshot : ModelSnapshot
+    [Migration("20230225001355_AddForeignKeyToParagraphsTable")]
+    partial class AddForeignKeyToParagraphsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,17 +73,12 @@ namespace Stories.Migrations
             modelBuilder.Entity("Stories.Models.ParagraphsTable", b =>
                 {
                     b.HasOne("Stories.Models.StoriesTable", "StoriesTable")
-                        .WithMany("ParagraphsTable")
+                        .WithMany()
                         .HasForeignKey("StoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("StoriesTable");
-                });
-
-            modelBuilder.Entity("Stories.Models.StoriesTable", b =>
-                {
-                    b.Navigation("ParagraphsTable");
                 });
 #pragma warning restore 612, 618
         }

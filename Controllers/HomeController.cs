@@ -26,6 +26,8 @@ namespace Stories.Controllers
                         View(await _context.StoriesTable.ToListAsync()) :
                         Problem("Entity set 'StoriesContext.StoriesTable'  is null.");*/
             List<StoriesTable> stories = await _context.StoriesTable.Include(s => s.ParagraphsTable).ToListAsync();
+            /*List<StoriesTable> stories = await _context.StoriesTable.ToListAsync();*/
+
             return View(stories);
         }
 

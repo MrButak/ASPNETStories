@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stories.Models
 {
@@ -10,6 +11,8 @@ namespace Stories.Models
 
         // Foreign Key
         public int StoryId { get; set; }
+
+        [ForeignKey("StoryId")]
         public StoriesTable StoriesTable { get; set; } = null!;
 
 

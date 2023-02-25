@@ -13,6 +13,6 @@ namespace Stories.Models
         [DataType(DataType.DateTime)] public DateTime StoryUpdatedAt { get; set; } = DateTime.Now;
 
         // One to many relationship with ParagraphsTable
-        public List<ParagraphsTable> ParagraphsTable { get; set; } = null!;
+        public List<ParagraphsTable> ParagraphsTable { get; set; }
     }
 }
