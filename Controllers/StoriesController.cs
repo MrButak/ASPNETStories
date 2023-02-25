@@ -101,12 +101,16 @@ namespace Stories.Controllers
                 return NotFound();
             }
 
-            var storiesTable = await _context.StoriesTable.FindAsync(id);
-            if (storiesTable == null)
+            var storyWithAllParagraphs = _context.StoriesTable
+                     .Include(s => s.ParagraphsTable)
+                     .FirstOrDefault(s => s.StoryId == id);
+
+            /*var storiesTable = await _context.StoriesTable.FindAsync(id);*/
+            if (storyWithAllParagraphs == null)
             {
                 return NotFound();
             }
-            return View(storiesTable);
+            return View(storyWithAllParagraphs);
         }
 
         // POST: Stories/Edit/5

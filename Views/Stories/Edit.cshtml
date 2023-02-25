@@ -1,14 +1,26 @@
-﻿@model Stories.Models.StoriesTable
+﻿@*@model List<StoriesTable>*@
+@model Stories.Models.StoriesTable
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <div class="d-flex flex-column w-100 align-items-center">
-    <h3>Edit Story</h3>
+    <h3>Add to Story</h3>
 </div>
 
-<div class="w-100 container-fluid d-flex flex-column align-items-center bg-light p-4">
+
+<h3>@Model.StoryTitle</h3>
+@foreach (var paragraph in Model.ParagraphsTable)
+{
+    <p>@paragraph.ParagraphText</p>
+}
+
+@*Todo: Add a textarea for new paragraph*@
+
+
+
+@*<div class="w-100 container-fluid d-flex flex-column align-items-center bg-light p-4">
     <form asp-action="Edit" class="d-flex flex-column gap-2 w-100">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="StoryId" />
@@ -18,15 +30,15 @@
             <span asp-validation-for="StoryTitle" class="text-danger"></span>
         </div>
         <div class="form-group">
-@*            <label asp-for="StoryBody" class="control-label"></label>
+            <label asp-for="StoryBody" class="control-label"></label>
             <textarea asp-for="StoryBody" class="form-control"></textarea>
-            <span asp-validation-for="StoryBody" class="text-danger"></span>*@
+            <span asp-validation-for="StoryBody" class="text-danger"></span>
         </div>
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
     </form>
-</div>
+</div>*@
 
 <div>
     <a asp-controller="Home" asp-action="Index">Back to List</a>
