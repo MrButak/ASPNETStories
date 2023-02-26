@@ -10,13 +10,12 @@
 
 <div class="w-100 container-fluid d-flex flex-column align-items-center gap-4 bg-light p-4">
 
-    <div class="card w-100">
-        <div class="card-body">
-        <h5 class="card-title">@Html.DisplayFor(model => model.StoryTitle)</h5>
-        @*<p class="card-text">@Html.DisplayFor(model => model.StoryBody)</p>*@
-        <p class ="card-text">@Html.DisplayFor(model => model.StoryCreatedAt)</p>
-        </div>
-    </div>
+    <h3>@Model.StoryTitle</h3>
+    @foreach (var paragraph in Model.ParagraphsTable)
+    {
+        <p>@paragraph.ParagraphText</p>
+    }
+
 
 </div>
 

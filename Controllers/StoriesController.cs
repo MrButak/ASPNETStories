@@ -36,14 +36,15 @@ namespace Stories.Controllers
                 return NotFound();
             }
 
-            var storiesTable = await _context.StoriesTable
-                .FirstOrDefaultAsync(m => m.StoryId == id);
-            if (storiesTable == null)
+            var storyWithAllParagraphs = _context.StoriesTable
+                     .Include(s => s.ParagraphsTable)
+                     .FirstOrDefault(s => s.StoryId == id);
+
+            if (storyWithAllParagraphs == null)
             {
                 return NotFound();
             }
-
-            return View(storiesTable);
+            return View(storyWithAllParagraphs);
         }
 
         // GET: Stories/Create
@@ -105,7 +106,6 @@ namespace Stories.Controllers
                      .Include(s => s.ParagraphsTable)
                      .FirstOrDefault(s => s.StoryId == id);
 
-            /*var storiesTable = await _context.StoriesTable.FindAsync(id);*/
             if (storyWithAllParagraphs == null)
             {
                 return NotFound();
