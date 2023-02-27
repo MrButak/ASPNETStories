@@ -116,26 +116,22 @@ namespace Stories.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StoryId,StoryTitle,StoryBody,StoryCreatedAt,StoryUpdatedAt")] StoriesTable storiesTable)
+        public async Task<IActionResult> Edit(int id, AddToStoryViewModel model)
+            // Should I just get the StoriesTable.StoryId out of the model? model.StoriesWithParagraphs.StoryId
         {
-            if (id != storiesTable.StoryId)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(storiesTable);
-            }
-
             try
             {
-                _context.Update(storiesTable);
-                await _context.SaveChangesAsync();
+                var newParagraph = new ParagraphsTable
+                {
+                    StoryId = id,
+                    ParagraphText = model.NewParagraphText
+                };
+                _context.ParagraphsTable.Add(newParagraph);
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StoriesTableExists(storiesTable.StoryId))
+                if (!StoriesTableExists(id))
                 {
                     return NotFound();
                 }
@@ -144,7 +140,8 @@ namespace Stories.Controllers
                     throw;
                 }
             }
-            return RedirectToAction(nameof(Index));
+            // TODO: Redirect to the Story details "Details?id", "Stories" 
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Stories/Delete/5

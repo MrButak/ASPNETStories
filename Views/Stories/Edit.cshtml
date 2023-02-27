@@ -7,15 +7,27 @@
 <div class="d-flex flex-column w-100 align-items-center">
     <h3>Add to Story</h3>
 </div>
-<p>@Model.StoryWithParagraphs</p>
-
-@*@foreach(var para in Model.StoryWithParagraphs)
+<h4>@Model.StoryWithParagraphs.StoryTitle</h4>
+@foreach (var p in @Model.StoryWithParagraphs.ParagraphsTable)
 {
-    <p>@para</p>
-}*@
+    <p>@p.ParagraphText</p>
+}
 
+<form asp-action="Edit" class="d-flex flex-column gap-3">
 
-@*<p>@Model.MyStr</p>*@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="NewParagraphText" class="control-label"></label>
+        <textarea asp-for="NewParagraphText" class="form-control"></textarea>
+        <span asp-validation-for="NewParagraphText" class="text-danger"></span>
+    </div>
+
+    <div class="form-group d-flex justify-content-between align-items-center">
+        <input type="submit" value="Add" class="btn btn-primary" />
+        <a asp-controller="Home" asp-action="Index">Back to List</a>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
