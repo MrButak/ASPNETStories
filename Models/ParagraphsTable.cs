@@ -15,6 +15,5 @@ namespace Stories.Models
         [ForeignKey("StoryId")]
         public StoriesTable StoriesTable { get; set; } = null!;
 
-
     }
 }

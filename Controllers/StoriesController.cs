@@ -93,8 +93,8 @@ namespace Stories.Controllers
             {
                 return NotFound();
             }
-
-            var storyWithAllParagraphs = _context.StoriesTable
+            
+            StoriesTable? storyWithAllParagraphs = _context.StoriesTable
                      .Include(s => s.ParagraphsTable)
                      .FirstOrDefault(s => s.StoryId == id);
 
@@ -103,16 +103,12 @@ namespace Stories.Controllers
                 return NotFound();
             }
 
-            var bla = new AddToStoryViewModel();
+            var vm = new AddToStoryViewModel
+            {
+                StoryWithParagraphs = storyWithAllParagraphs
+            };
 
-           /* bla.StoryWithAllParagraphs = storyWithAllParagraphs;*/
-
-            bla.MyStr = "here is my freaking string";
-
-            Console.WriteLine(storyWithAllParagraphs.GetType().Name);
-            Console.WriteLine("^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-            return View(bla);
+            return View(vm);
         }
 
         // POST: Stories/Edit/5

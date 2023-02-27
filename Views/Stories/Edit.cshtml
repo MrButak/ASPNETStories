@@ -7,13 +7,15 @@
 <div class="d-flex flex-column w-100 align-items-center">
     <h3>Add to Story</h3>
 </div>
+<p>@Model.StoryWithParagraphs</p>
 
-<p>@Model.MyStr</p>
-
-@*@foreach(blaa in Model.StoryWithAllParagraphs)
+@*@foreach(var para in Model.StoryWithParagraphs)
 {
-    <p>@blaa</p>
+    <p>@para</p>
 }*@
+
+
+@*<p>@Model.MyStr</p>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
