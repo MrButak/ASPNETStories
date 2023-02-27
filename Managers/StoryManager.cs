@@ -20,9 +20,19 @@ namespace Stories.Managers
             var StoryWithAllParagraphs = StoryAccessor.QueryStory(id, _context);
             return StoryWithAllParagraphs;
         }
+
         public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {
-            return StoryAccessor.CreateStory(StoryTitle, ParagraphText, _context);
+            return StoryAccessor.InsertNewStory(StoryTitle, ParagraphText, _context);
+        }
+
+        public static bool AddToStory(int id, string ParagraphText, Stories.Data.StoriesContext _context)
+        {
+            if(StoryAccessor.InsertParagraphIntoStory(id, ParagraphText, _context))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

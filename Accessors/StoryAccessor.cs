@@ -24,7 +24,7 @@ namespace Stories.Accessors
             return storyWithAllParagraphs;
         }
 
-        public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
+        public static bool InsertNewStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -53,6 +53,27 @@ namespace Stories.Accessors
                 }
             }
 
+        }
+
+        public static bool InsertParagraphIntoStory(int id, string ParagraphText, Stories.Data.StoriesContext _context)
+        {
+           try
+            {
+                var newParagraph = new ParagraphsTable
+                {
+                    StoryId = id,
+                    ParagraphText = ParagraphText
+                };
+                _context.ParagraphsTable.Add(newParagraph);
+                _context.SaveChanges();
+                return true;
+            }
+                
+           
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
         }
     }
 }

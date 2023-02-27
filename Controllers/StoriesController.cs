@@ -91,35 +91,16 @@ namespace Stories.Controllers
         }
 
         // POST: Stories/Add/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(int id, AddToStoryViewModel model)
-            // Should I just get the StoriesTable.StoryId out of the model? model.StoriesWithParagraphs.StoryId
         {
-            try
+            if(StoryManager.AddToStory(id, model.NewParagraphText, _context))
             {
-                var newParagraph = new ParagraphsTable
-                {
-                    StoryId = id,
-                    ParagraphText = model.NewParagraphText
-                };
-                _context.ParagraphsTable.Add(newParagraph);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StoriesTableExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            // TODO: Redirect to the Story details "Details?id", "Stories" 
+                return RedirectToAction("Index", "Home");
+            };
+            
+            // TODO: Handle falsy return
             return RedirectToAction("Index", "Home");
         }
 
@@ -160,9 +141,9 @@ namespace Stories.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private bool StoriesTableExists(int id)
+        /*private bool StoriesTableExists(int id)
         {
           return (_context.StoriesTable?.Any(e => e.StoryId == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }
