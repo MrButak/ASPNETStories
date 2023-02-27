@@ -29,9 +29,8 @@ namespace Stories.Controllers
                 return NotFound();
             }
 
-            var storyWithAllParagraphs = _context.StoriesTable
-                     .Include(s => s.ParagraphsTable)
-                     .FirstOrDefault(s => s.StoryId == id);
+            var StoryManager = new StoryManager();
+            var storyWithAllParagraphs = StoryManager.GetStory(id, _context);
 
             if (storyWithAllParagraphs == null)
             {

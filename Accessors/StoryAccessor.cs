@@ -16,6 +16,14 @@ namespace Stories.Accessors
             return stories;
         }
 
+        public StoriesTable QueryStory(int? id, Stories.Data.StoriesContext _context)
+        {
+            var storyWithAllParagraphs = _context.StoriesTable
+                     .Include(s => s.ParagraphsTable)
+                     .FirstOrDefault(s => s.StoryId == id);
+            return storyWithAllParagraphs;
+        }
+
         public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {
             using (var transaction = _context.Database.BeginTransaction())
