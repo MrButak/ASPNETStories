@@ -72,22 +72,21 @@ namespace Stories.Controllers
             {
                 return NotFound();
             }
-            
-            StoriesTable? storyWithAllParagraphs = _context.StoriesTable
-                     .Include(s => s.ParagraphsTable)
-                     .FirstOrDefault(s => s.StoryId == id);
+
+            var StoryManager = new StoryManager();
+            var storyWithAllParagraphs = StoryManager.GetStory(id, _context);
 
             if (storyWithAllParagraphs == null)
             {
                 return NotFound();
             }
-
-            var vm = new AddToStoryViewModel
+ 
+            var AddToStoryViewModel = new AddToStoryViewModel
             {
                 StoryWithParagraphs = storyWithAllParagraphs
             };
 
-            return View(vm);
+            return View(AddToStoryViewModel);
         }
 
         // POST: Stories/Add/5
@@ -112,14 +111,15 @@ namespace Stories.Controllers
                 return NotFound();
             }
 
-            var storiesTable = await _context.StoriesTable
-                .FirstOrDefaultAsync(m => m.StoryId == id);
-            if (storiesTable == null)
+            var StoryManager = new StoryManager();
+            var storyWithAllParagraphs = StoryManager.GetStory(id, _context);
+            
+            if (storyWithAllParagraphs == null)
             {
                 return NotFound();
             }
 
-            return View(storiesTable);
+            return View(storyWithAllParagraphs);
         }
 
         // POST: Stories/Delete/5
@@ -131,13 +131,13 @@ namespace Stories.Controllers
             {
                 return Problem("Entity set 'StoriesContext.StoriesTable'  is null.");
             }
-            var storiesTable = await _context.StoriesTable.FindAsync(id);
-            if (storiesTable != null)
+
+            if(StoryManager.DeleteStory(id, _context))
             {
-                _context.StoriesTable.Remove(storiesTable);
+                return RedirectToAction("Index", "Home");
             }
-            
-            await _context.SaveChangesAsync();
+
+            // TODO: Handle falsy return
             return RedirectToAction("Index", "Home");
         }
 

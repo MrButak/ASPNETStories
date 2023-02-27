@@ -19,8 +19,8 @@ namespace Stories.Accessors
         public StoriesTable QueryStory(int? id, Stories.Data.StoriesContext _context)
         {
             var storyWithAllParagraphs = _context.StoriesTable
-                     .Include(s => s.ParagraphsTable)
-                     .FirstOrDefault(s => s.StoryId == id);
+                .Include(s => s.ParagraphsTable)
+                .FirstOrDefault(s => s.StoryId == id);
             return storyWithAllParagraphs;
         }
 
@@ -52,7 +52,6 @@ namespace Stories.Accessors
                     throw;
                 }
             }
-
         }
 
         public static bool InsertParagraphIntoStory(int id, string ParagraphText, Stories.Data.StoriesContext _context)
@@ -68,12 +67,22 @@ namespace Stories.Accessors
                 _context.SaveChanges();
                 return true;
             }
-                
-           
             catch (DbUpdateConcurrencyException)
             {
                 return false;
             }
+        }
+
+        public static bool DeleteStory(int id, Stories.Data.StoriesContext _context)
+        {
+            var storyIdentifiedById = _context.StoriesTable.Find(id);
+            if (storyIdentifiedById != null)
+            {
+                _context.StoriesTable.Remove(storyIdentifiedById);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

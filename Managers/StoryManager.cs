@@ -34,5 +34,14 @@ namespace Stories.Managers
             }
             return false;
         }
+
+        public static bool DeleteStory(int id, Stories.Data.StoriesContext _context)
+        {
+            if(StoryAccessor.DeleteStory(id, _context))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
