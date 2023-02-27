@@ -9,10 +9,9 @@ namespace Stories.Managers
     {
         public async Task<List<StoriesTable>> GetAllStories(Stories.Data.StoriesContext _context)
         {
-            List<StoriesTable> stories = await _context.StoriesTable
-                .Include(s => s.ParagraphsTable)
-                .ToListAsync();
-            return stories;
+            var StoryAccessor = new StoryAccessor();
+            List<StoriesTable> AllStories = await StoryAccessor.QueryAllStories(_context);
+            return AllStories;
         }
         public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {

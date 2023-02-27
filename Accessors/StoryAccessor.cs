@@ -8,15 +8,14 @@ namespace Stories.Accessors
 {
     public class StoryAccessor
     {
-        /*public StoriesTable QueryAllStories(StoriesContext _context)
+        public async Task<List<StoriesTable>> QueryAllStories(Stories.Data.StoriesContext _context)
         {
-            var stories = _context.StoriesTable
+            List<StoriesTable> stories = await _context.StoriesTable
                 .Include(s => s.ParagraphsTable)
-                .ToList();
-
+                .ToListAsync();
             return stories;
-        }*/
-    
+        }
+
         public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {
             using (var transaction = _context.Database.BeginTransaction())

@@ -23,10 +23,8 @@ namespace Stories.Controllers
         // GET: Stories
         public async Task<IActionResult> Index()
         {
-            var sm = new StoryManager();
-            
-            List<StoriesTable> AllStories = await sm.GetAllStories(_context);
-
+            var StoryManager = new StoryManager();
+            List<StoriesTable> AllStories = await StoryManager.GetAllStories(_context);
 
             return View(AllStories);
         }
