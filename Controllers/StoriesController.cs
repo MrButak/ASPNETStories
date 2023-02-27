@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Stories.Data;
+using Stories.Managers;
 using Stories.Models;
 using Stories.ViewModels;
 
@@ -46,8 +47,6 @@ namespace Stories.Controllers
         }
 
         // POST: Stories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateStoryViewModel model)
@@ -57,32 +56,13 @@ namespace Stories.Controllers
                 return RedirectToAction("Create", "Stories");
             }
 
-            using (var transaction = _context.Database.BeginTransaction())
+            if(StoryManager.CreateStory(model.StoryTitle, model.ParagraphText, _context))
             {
-                try
-                {
-                    var story = new StoriesTable { StoryTitle = model.StoryTitle };
-                    _context.Add(story);
-                    _context.SaveChanges();
-
-                    var paragraph = new ParagraphsTable
-                    {
-                        ParagraphText = model.ParagraphText,
-                        StoryId = story.StoryId
-                    };
-                    _context.Add(paragraph);
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+                return RedirectToAction("Index", "Home");
             }
+            
+            // TODO: Handle fail, show error message to user / send to an Error View
+            return RedirectToAction("Index", "Home");
         }
 
 
