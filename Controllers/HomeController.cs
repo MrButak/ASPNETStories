@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Stories.Data;
+using Stories.Managers;
 using Stories.Models;
 
 namespace Stories.Controllers
@@ -22,12 +23,12 @@ namespace Stories.Controllers
         // GET: Stories
         public async Task<IActionResult> Index()
         {
-            Console.WriteLine(_context);
-            List<StoriesTable> stories = await _context.StoriesTable
-                .Include(s => s.ParagraphsTable)
-                .ToListAsync();
+            var sm = new StoryManager();
+            
+            List<StoriesTable> AllStories = await sm.GetAllStories(_context);
 
-            return View(stories);
+
+            return View(AllStories);
         }
 
         public IActionResult Privacy()

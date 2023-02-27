@@ -1,18 +1,22 @@
-﻿using Stories.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Stories.Data;
 using Stories.Models;
+using System.Collections.Generic;
 
 namespace Stories.Accessors
 {
     public class StoryAccessor
     {
-
-        private readonly StoriesContext _context;
-
-        public StoryAccessor(StoriesContext context)
+        /*public StoriesTable QueryAllStories(StoriesContext _context)
         {
-            _context = context;
-        }
+            var stories = _context.StoriesTable
+                .Include(s => s.ParagraphsTable)
+                .ToList();
 
+            return stories;
+        }*/
+    
         public static bool CreateStory(string StoryTitle, string ParagraphText, Stories.Data.StoriesContext _context)
         {
             using (var transaction = _context.Database.BeginTransaction())
