@@ -66,8 +66,8 @@ namespace Stories.Controllers
         }
 
 
-        // GET: Stories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Stories/Add/5
+        public async Task<IActionResult> Add(int? id)
         {
             if (id == null || _context.StoriesTable == null)
             {
@@ -91,12 +91,12 @@ namespace Stories.Controllers
             return View(vm);
         }
 
-        // POST: Stories/Edit/5
+        // POST: Stories/Add/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, AddToStoryViewModel model)
+        public async Task<IActionResult> Add(int id, AddToStoryViewModel model)
             // Should I just get the StoriesTable.StoryId out of the model? model.StoriesWithParagraphs.StoryId
         {
             try
